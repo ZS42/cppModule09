@@ -6,7 +6,7 @@
 /*   By: zsyyida <zsyyida@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:17:45 by zsyyida           #+#    #+#             */
-/*   Updated: 2023/12/25 23:07:53 by zsyyida          ###   ########.fr       */
+/*   Updated: 2023/12/26 01:36:56 by zsyyida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void PmergeMe::mergeInsertVector()
     }
     // sorting the pairs in ascending order based on second in pair .Using stable sort for handling duplicates
     std::stable_sort(_myPairedVector.begin(), _myPairedVector.end(), myCompare);
+    // jacobsthal numbers less than 3 are not relevant
     int jacobsthalSequence[] = {3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731};
     std::vector<std::pair<int, int> >::iterator myPairedVectorIt;
     int pair_number = static_cast<int>(_myPairedVector.size());
@@ -135,11 +136,10 @@ void PmergeMe::mergeInsertVector()
 	for (int j = 0; jacobsthalSequence[j] - 1 < pair_number; j++)
 	{
 		int index = jacobsthalSequence[j];
-		int length = index + sortedIndex;
 		for (int i = index - 1; i > sortedIndex; i--)
 		{
 			myPairedVectorIt = _myPairedVector.begin();
-			_sortedNbrVector.insert(std::lower_bound(_sortedNbrVector.begin(),_sortedNbrVector.begin() + length, (myPairedVectorIt + i)->first), (myPairedVectorIt + i)->first);
+			_sortedNbrVector.insert(std::lower_bound(_sortedNbrVector.begin(),_sortedNbrVector.end(), (myPairedVectorIt + i)->first), (myPairedVectorIt + i)->first);
 		}
 		sortedIndex = index - 1;
 	}
